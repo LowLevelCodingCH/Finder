@@ -1,0 +1,45 @@
+#!/bin/python3
+
+import sys
+
+av = sys.argv
+
+try:
+    fname = av[1]
+    if len(av) == 4:
+        print(f"Searching in: `{fname}'")
+        if av[2] == "-t":
+            searchq = ' '.join(av[3:])
+            print(f"Searching text: `{searchq}'")
+
+            with open(fname, "r") as f:
+                lines = f.read().split("\n")
+                lne = 1
+                for line in lines:
+                    if searchq in line:
+                        print(f"\033[4m\033[32m`{line.strip()}'\033[0m \033[43m\033[1m({lne})\033[0m matched \033[44m`{searchq}'\033[0m")
+                    lne += 1
+        elif av[2] == "-l":
+            lnum = av[3]
+            print(f"Searching line: {lnum}")
+
+            with open(fname, "r") as f:
+                lines = f.read().split("\n")
+                lne = 1
+                for line in lines:
+                    if lne == int(lnum):
+                        print(f"\033[4m\033[32m`{line.strip()}'\033[0m matched \033[44m{lnum}\033[0m")
+                    lne += 1
+    elif len(av) == 3:
+        if av[2] == "-s":
+
+            print(f"Searching size (numbers of lines)")
+
+            with open(fname, "r") as f:
+                lines = f.read().split("\n")
+                lne = 1
+                for line in lines:
+                    lne += 1
+                print(f"\033[4m{lne}\033[0m")
+except:
+    print("SOMETHING WENT WRONG")
